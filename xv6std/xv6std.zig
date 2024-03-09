@@ -5,6 +5,7 @@ pub extern fn wait([*c]c_int) c_int;
 pub extern fn open([*c]const u8, c_int) c_int;
 pub extern fn mknod([*c]const u8, c_short, c_short) c_int;
 pub extern fn dup(c_int) c_int;
+pub extern fn getpid() c_int;
 pub extern fn printf([*c]const u8, ...) void;
 
 pub const CONSOLE = @as(c_int, 1);

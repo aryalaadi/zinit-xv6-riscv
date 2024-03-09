@@ -4,6 +4,8 @@ const std = @import("xv6std/xv6std.zig");
 pub export fn main() u8 {
     var pid: c_int = undefined;
     var wpid: c_int = undefined;
+    const initpid: c_int = std.getpid();
+
     if (std.open("console", std.O_RDWR) != 0) {
         _ = std.mknod("console", std.CONSOLE, 0);
         _ = std.open("console", std.O_RDWR);
@@ -11,6 +13,12 @@ pub export fn main() u8 {
 
     _ = std.dup(0); // stdout
     _ = std.dup(0); // stderr
+    std.printf("zinit: console, stdout and stderr initialized\n");
+
+    if (initpid != 1) {
+        std.printf("zinit: cannot run as pid %d\n", initpid);
+        std.exit(127);
+    }
 
     const argv = &[_:null]?[*:0]const u8{"sh"};
     while (true) {
